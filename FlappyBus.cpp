@@ -43,14 +43,16 @@ void FlappyBus::update() {
     velocity += 1;
 }
 
-bool FlappyBus::isCollision(int obstaclePosition, int obstacleHeight) const {
-    return position >= obstacleHeight && position <= obstacleHeight + 5 &&
-           obstaclePosition <= 10;
+bool FlappyBus::isCollision(const BusObstacle& obstacle) const {
+    return obstacle.getPosition() <= 10 && position >= obstacle.getObstacleHeight() &&
+           position <= obstacle.getObstacleHeight() + 5;
 }
 
 void FlappyBus::displayInfo() const {
     std::cout << "\nNome do Jogador: " << playerName << std::endl;
     std::cout << "Posicao do onibus: " << position << std::endl;
     std::cout << "Velocidade do onibus: " << velocity << std::endl;
-    std::cout << "Pontuacao: " << score << std::endl;
+    std::cout << "Pontuacao: " << scoreManager.getCurrentScore() << std::endl;
+    std::cout << "Informacoes do Obstaculo:" << std::endl;
+    obstacle.displayInfo();
 }

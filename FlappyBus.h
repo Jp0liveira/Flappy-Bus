@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include "BusObstacle.h"
+#include "ScoreManager.h"
 
 class FlappyBus {
 
@@ -22,7 +24,8 @@ class FlappyBus {
         // Métodos adicionais
         void jump();
         void update();
-        bool isCollision(int obstaclePosition, int obstacleHeight) const;
+        // Usando composicao
+        bool isCollision(const BusObstacle& obstacle) const;
         void displayInfo() const;
 
     private:
@@ -30,5 +33,9 @@ class FlappyBus {
         double velocity;
         int score;
         std::string playerName;
+
+        // Usando composicao
+        BusObstacle obstacle;
+        ScoreManager scoreManager;
         
 };
