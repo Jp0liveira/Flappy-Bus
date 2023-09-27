@@ -1,10 +1,18 @@
 #include <iostream>
 #include "FlappyBus.h"
 
-FlappyBus::FlappyBus() : position(0), velocity(0), score(0), playerName("Player") {}
+FlappyBus::FlappyBus(): position(0), velocity(0), score(0), playerName("Player") {}
 
-FlappyBus::FlappyBus(int initialPosition, double initialVelocity, const std::string& name)
-    : position(initialPosition), velocity(initialVelocity), score(0), playerName(name) {}
+FlappyBus::FlappyBus(int initialPosition, double initialVelocity, const std::string& name): position(initialPosition), velocity(initialVelocity), score(0), playerName(name){}
+
+FlappyBus::FlappyBus(const FlappyBus &c_flappyBus){
+    this->playerName = c_flappyBus.playerName;
+    this->position = c_flappyBus.position;
+    this->velocity = c_flappyBus.velocity;
+    this-> score = c_flappyBus.score;
+};
+
+FlappyBus::~FlappyBus(){}
 
 int FlappyBus::getPosition() const {
     return position;
@@ -35,7 +43,13 @@ void FlappyBus::setPlayerName(const std::string& newName) {
 }
 
 void FlappyBus::jump() {
-    velocity = -2;
+    this->increaseScore();
+    this->update();
+    if (didCollide(this->position, this->velocity)){
+        std::cout << "Colidiu!" << std::endl;
+    }else{
+         std::cout << "Nao colidiu!" << std::endl;
+    }
 }
 
 void FlappyBus::update() {
@@ -43,16 +57,21 @@ void FlappyBus::update() {
     velocity += 1;
 }
 
-bool FlappyBus::isCollision(const BusObstacle& obstacle) const {
-    return obstacle.getPosition() <= 10 && position >= obstacle.getObstacleHeight() &&
-           position <= obstacle.getObstacleHeight() + 5;
+bool FlappyBus::didCollide(int position, double velocity){
+    const int collisionMargin = 1;
+    return abs(position - velocity) <= collisionMargin;
 }
+
+void FlappyBus::increaseScore() {
+    this-> score = this->scoreManager.increaseScore();
+}
+
 
 void FlappyBus::displayInfo() const {
     std::cout << "\nNome do Jogador: " << playerName << std::endl;
     std::cout << "Posicao do onibus: " << position << std::endl;
     std::cout << "Velocidade do onibus: " << velocity << std::endl;
-    std::cout << "Pontuacao: " << scoreManager.getCurrentScore() << std::endl;
-    std::cout << "Informacoes do Obstaculo:" << std::endl;
-    obstacle.displayInfo();
+    std::cout << "Pontuacao: " << score << std::endl;
+    std::cout << "Pontuacao maxima: " << scoreManager.getMaxScore() << std::endl;
+
 }

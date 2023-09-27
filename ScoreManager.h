@@ -1,17 +1,21 @@
 #pragma once
 
 class ScoreManager {
-private:
-    int score;
-    const int maxScore;
 
-public:
-    ScoreManager();
-    ScoreManager(int max);
+    public:
+        ScoreManager();
+        ScoreManager(int max);
+        ScoreManager(const ScoreManager&);
+        ~ScoreManager();
 
-    int getCurrentScore() const;
-    int getMaxScore() const;
-    
-    void increaseScore();
-    bool isMaxScoreReached() const;
+        int getCurrentScore() const;
+        int getMaxScore() const;
+        
+        int increaseScore();
+        bool isMaxScoreReached() const;
+
+    private:
+        int score;
+        const int MAXSCORE;
+
 };

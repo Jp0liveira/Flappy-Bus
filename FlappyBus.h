@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "BusObstacle.h"
 #include "ScoreManager.h"
 
 class FlappyBus {
@@ -8,9 +7,10 @@ class FlappyBus {
     public:
         // Construtor padrão
         FlappyBus();
-
         // Construtor com parâmetros
         FlappyBus(int initialPosition, double initialVelocity, const std::string& name);
+        FlappyBus(const FlappyBus&);
+        ~FlappyBus();
 
         // Getters e setters
         int getPosition() const;
@@ -22,20 +22,20 @@ class FlappyBus {
         void setPlayerName(const std::string& newName);
 
         // Métodos adicionais
-        void jump();
-        void update();
-        // Usando composicao
-        bool isCollision(const BusObstacle& obstacle) const;
+        void jump(); // Usa a classe ScoreManager
         void displayInfo() const;
-
+        bool didCollide(int position, double velocity);
+        
     private:
         int position;
         double velocity;
         int score;
         std::string playerName;
-
-        // Usando composicao
-        BusObstacle obstacle;
+        
+        // Uso da classe ScoreManager
         ScoreManager scoreManager;
+        
+        void update();
+        void increaseScore();
         
 };
