@@ -3,34 +3,15 @@
 
 int main() {
     // Uso da classe FlappyBus
-    FlappyBus player1; 
-    FlappyBus player2(0.5, 2, "Alice"); 
-    
-    FlappyBus player3(player2);
-    player3.displayInfo();
 
-    player2.setPlayerName("Bob");
+    FlappyBus player(0.5, 2, "Alice"); 
+    ScoreManager scoreManager(100);
 
-    int position1 = player1.getPosition();
-    double velocity1 = player1.getVelocity();
-    std::cout << position1 << std::endl;
-    std::cout << velocity1 << std::endl;
-    player1.setPosition(20);
-    player2.setVelocity(2.0);
-    player1.displayInfo();
+    FlappyBus c_flappyBus(player);
+    ScoreManager c_scoreManager(scoreManager);
 
-    bool collisionResult = player1.didCollide(player1.getPosition(), player1.getVelocity());
+    std::cout << c_flappyBus.getPlayerName() << std::endl;
+    std::cout << c_scoreManager.getCurrentScore() << std::endl;
 
-    if (collisionResult) {
-        std::cout << "Jogador 1 Colidiu!" << std::endl;
-    } else {
-        std::cout << "Jogador 1 Nao Colidiu!" << std::endl;
-    }
-
-    player2.jump();
-    player2.displayInfo();
-    player2.jump();
-    player2.displayInfo();
-    
     return 0;
 }

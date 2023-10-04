@@ -30,6 +30,10 @@ std::string FlappyBus::getPlayerName() const {
     return playerName;
 }
 
+bool FlappyBus::getHadCollision(){
+    return hadCollision;
+}
+
 void FlappyBus::setPosition(int newPosition) {
     position = newPosition;
 }
@@ -40,6 +44,15 @@ void FlappyBus::setVelocity(double newVelocity) {
 
 void FlappyBus::setPlayerName(const std::string& newName) {
     playerName = newName;
+}
+
+void FlappyBus::setHadCollision(bool collision){
+    hadCollision = collision;
+}
+
+
+int FlappyBus::MaxScore(const ScoreManager& c_scoreManager){
+    return this->score = c_scoreManager.getMaxScore();
 }
 
 void FlappyBus::jump() {
@@ -59,7 +72,10 @@ void FlappyBus::update() {
 
 bool FlappyBus::didCollide(int position, double velocity){
     const int collisionMargin = 1;
-    return abs(position - velocity) <= collisionMargin;
+    if (abs(position - velocity) <= collisionMargin){
+       hadCollision = true;
+    }
+    return hadCollision;
 }
 
 void FlappyBus::increaseScore() {

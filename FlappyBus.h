@@ -16,10 +16,14 @@ class FlappyBus {
         int getPosition() const;
         double getVelocity() const;
         int getScore() const;
+        bool getHadCollision();
+        int MaxScore(const ScoreManager& );
         std::string getPlayerName() const;
-        void setPosition(int newPosition);
-        void setVelocity(double newVelocity);
-        void setPlayerName(const std::string& newName);
+
+        void setPosition(int);
+        void setVelocity(double);
+        void setPlayerName(const std::string&);
+        void setHadCollision(bool);
 
         // Métodos adicionais
         void jump(); // Usa a classe ScoreManager
@@ -31,6 +35,7 @@ class FlappyBus {
         double velocity;
         int score;
         std::string playerName;
+        bool hadCollision = false;
         
         // Uso da classe ScoreManager
         ScoreManager scoreManager;
