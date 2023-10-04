@@ -7,4 +7,7 @@
 #include "ScoreManager.h"
 #include "ScoreManager.cpp"
 
+#include "GameManager.h"
+#include "GameManager.cpp"
+
 #endif // MAIN_INCLUDES_H
