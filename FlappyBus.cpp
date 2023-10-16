@@ -1,7 +1,7 @@
 #include <iostream>
 #include "FlappyBus.h"
 
-FlappyBus::FlappyBus(): position(0), velocity(0), score(0), playerName("Player") {}
+FlappyBus::FlappyBus(): position(5), velocity(3), score(0), playerName("Player") {}
 
 FlappyBus::FlappyBus(int initialPosition, double initialVelocity, const std::string& name): position(initialPosition), velocity(initialVelocity), score(0), playerName(name){}
 
