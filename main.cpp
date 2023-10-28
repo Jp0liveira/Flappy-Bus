@@ -2,23 +2,21 @@
 #include "main_includes.h"
 
 int main() {
-    GameManager gameManager(3, 9.8);
-    GameManager* copiedGameManagerPtr = new GameManager(gameManager);
 
-    // Alocar memória para o histórico de jogos
-    copiedGameManagerPtr->alocarHist();
+    // Crie uma instância de GameManager
+    GameManager game;
 
-    // Criar um novo objeto GameManager para ser registrado no histórico
-    GameManager gameToRegister(2, 9.8);
+    // Inicie o jogo
+    game.startGame();
 
-    // Cadastrar o objeto no histórico
-    copiedGameManagerPtr->cadastrarRegInHist(gameToRegister);
+    // Registre algumas vitórias no histórico
+    game.registerWin("Jogador1");
+    game.registerWin("Jogador2");
+    game.registerWin("Jogador3");
 
-    // Mostrar a quantidade de jogos no histórico
-    copiedGameManagerPtr->printGameCount();
+    // Exiba o histórico de vitórias
+    game.displayWinHistory();
 
-    // Libere a memória alocada dinamicamente
-    delete copiedGameManagerPtr;
-    
     return 0;
+
 }
