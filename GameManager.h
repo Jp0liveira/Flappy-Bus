@@ -24,6 +24,11 @@ class GameManager {
         static void printGameCount();
         static void applyGravity(FlappyBus&);
 
+        // Métodos para histórico de vitórias
+        void registerWin(const std::string& playerName);
+        void displayWinHistory() const;
+
+
     private:
         // Array const static
         static const int maxLevels = 5;
@@ -36,5 +41,12 @@ class GameManager {
         inline static void printWelcomeMessage() {
             std::cout << "Bem-vindo ao Flappy Bus Game!" << std::endl;
         }
+
+        // Histórico de vitórias
+        std::string* winHistory;
+        int winHistorySize;
+        int winCount;
+
+        void allocateMemory(int newSize);
 };
 

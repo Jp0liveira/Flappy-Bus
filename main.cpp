@@ -2,11 +2,20 @@
 #include "main_includes.h"
 
 int main() {
+    // Crie uma instância de GameManager
+    GameManager game;
 
-    GameManager game1;
-    GameManager game2(5, 9.8);
-    
-    game2.startGame();
+    // Inicie o jogo
+    game.startGame();
+
+    // Registre algumas vitórias no histórico
+    game.registerWin("Jogador1");
+    game.registerWin("Jogador2");
+    game.registerWin("Jogador3");
+
+    // Exiba o histórico de vitórias
+    game.displayWinHistory();
 
     return 0;
+
 }
