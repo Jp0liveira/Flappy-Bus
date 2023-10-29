@@ -1,18 +1,28 @@
 #include <iostream>
 #include "FlappyBus.h"
 
-FlappyBus::FlappyBus(): position(5), velocity(3), score(0), playerName("Player") {}
+FlappyBus::FlappyBus(): position(5), velocity(3), score(0), playerName("Player"), eventLog(nullptr), eventLogSize(0), eventCount(0) {}
 
-FlappyBus::FlappyBus(int initialPosition, double initialVelocity, const std::string& name): position(initialPosition), velocity(initialVelocity), score(0), playerName(name){}
+FlappyBus::FlappyBus(int initialPosition, double initialVelocity, const std::string& name): position(initialPosition), velocity(initialVelocity), score(0), playerName(name), eventLog(nullptr), eventLogSize(0), eventCount(0){}
 
 FlappyBus::FlappyBus(const FlappyBus &c_flappyBus){
     this->playerName = c_flappyBus.playerName;
     this->position = c_flappyBus.position;
     this->velocity = c_flappyBus.velocity;
     this-> score = c_flappyBus.score;
+
+     // Copiar o registro de eventos do jogo
+    this->eventLogSize = c_flappyBus.eventLogSize;
+    this->eventCount = c_flappyBus.eventCount;
+    this->eventLog = new std::string[this->eventLogSize];
+    for (int i = 0; i < eventCount; ++i) {
+        this->eventLog[i] = c_flappyBus.eventLog[i];
+    }
 };
 
-FlappyBus::~FlappyBus(){}
+FlappyBus::~FlappyBus(){
+    delete[] eventLog;
+}
 
 int FlappyBus::getPosition() const {
     return position;
@@ -50,7 +60,6 @@ void FlappyBus::setHadCollision(bool collision){
     hadCollision = collision;
 }
 
-
 int FlappyBus::MaxScore(const ScoreManager& c_scoreManager){
     return this->score = c_scoreManager.getMaxScore();
 }
@@ -82,7 +91,6 @@ void FlappyBus::increaseScore() {
     this-> score = this->scoreManager.increaseScore();
 }
 
-
 void FlappyBus::displayInfo() const {
     std::cout << "\nNome do Jogador: " << playerName << std::endl;
     std::cout << "Posicao do onibus: " << position << std::endl;
@@ -92,7 +100,32 @@ void FlappyBus::displayInfo() const {
 
 }
 
+// Alocação de memória
+void FlappyBus::addEvent(const std::string& eventDescription) {
+    if (eventCount >= eventLogSize) {
+        allocateMemory(eventLogSize + 1);
+    }
+    eventLog[eventCount++] = eventDescription;
+}
 
+void FlappyBus::displayEventLog() const {
+    std::cout << "Registro de Eventos do Jogo:\n";
+    for (int i = 0; i < eventCount; ++i) {
+        std::cout << "Evento " << i + 1 << ": " << eventLog[i] << std::endl;
+    }
+}
+
+void FlappyBus::allocateMemory(int newSize) {
+    std::string* newEventLog = new std::string[newSize];
+    for (int i = 0; i < eventCount; ++i) {
+        newEventLog[i] = eventLog[i];
+    }
+    delete[] eventLog;
+    eventLog = newEventLog;
+    eventLogSize = newSize;
+}
+
+// Sobrecarga dos Operadores
 FlappyBus& FlappyBus::operator=(const FlappyBus& other) {
     if (this == &other) {
         return *this;
@@ -135,3 +168,4 @@ std::ostream& operator<<(std::ostream& os, const FlappyBus& flappyBus) {
     os << "Pontuacao maxima: " << flappyBus.scoreManager.getMaxScore() << std::endl;
     return os;
 }
+

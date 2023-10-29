@@ -113,7 +113,7 @@ void GameManager::allocateMemory(int newSize) {
     winHistory = newWinHistory;
     winHistorySize = newSize;
 }
-
+    
 // Sobrecarga dos Operadores
 GameManager& GameManager::operator=(const GameManager& other) {
     if (this == &other) {

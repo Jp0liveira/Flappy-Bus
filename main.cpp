@@ -2,34 +2,20 @@
 #include "main_includes.h"
 
 int main() {
+     // Crie um objeto FlappyBus
+    FlappyBus player(5, 0.5, "Joao");
 
-    ScoreManager score1;
-    ScoreManager score2(200);
+    // Simule alguns eventos do jogo
+    player.addEvent("Iniciando o jogo");
+    player.jump(); // Simula um salto
+    player.addEvent("Jogador pulou");
 
-    std::cout << "Score 1:\n" << score1 << std::endl;
-    std::cout << "Score 2:\n" << score2 << std::endl;
-
-    // Atribuição e comparação
-    score1 = score2;
-    std::cout << "Score 1 apos atribuicao:\n" << score1 << std::endl;
-
-    if (score1 == score2) {
-        std::cout << "Score 1 e igual a Score 2.\n";
-    } else {
-        std::cout << "Score 1 e diferente de Score 2.\n";
-    }
-
-    if (score1 != score2) {
-        std::cout << "Score 1 e diferente de Score 2.\n";
-    } else {
-        std::cout << "Score 1 e igual a Score 2.\n";
-    }
-
-    if (!score1) {
-        std::cout << "Score 1 e zero.\n";
-    } else {
-        std::cout << "Score 1 nao e zero.\n";
-    }
+    // Exiba informações do jogador e o registro de eventos
+    std::cout << "Informacoes do jogador:\n";
+    std::cout << player << std::endl;
+    
+    // Registro de Eventos do jogo
+    player.displayEventLog();
 
     return 0;
 

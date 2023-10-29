@@ -35,6 +35,10 @@ class FlappyBus {
         bool operator==(const FlappyBus& other) const;
         bool operator!=(const FlappyBus& other) const;
         bool operator!() const;
+        
+        // Métodos para registro de eventos do jogo
+        void addEvent(const std::string& eventDescription);
+        void displayEventLog() const;
 
     private:
         int position;
@@ -48,5 +52,13 @@ class FlappyBus {
         
         void update();
         void increaseScore();
-        
+
+        // Registro de eventos do jogo
+        std::string* eventLog;
+        int eventLogSize;
+        int eventCount;
+
+        void allocateMemory(int newSize);
+
+            
 };
