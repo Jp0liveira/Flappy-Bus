@@ -3,6 +3,7 @@
 #include "FlappyBus.h"
 
 class GameManager {
+        friend std::ostream& operator<<(std::ostream&, const GameManager&);
     public:
         // Construtores
         GameManager();
@@ -18,16 +19,21 @@ class GameManager {
         static double gravity;
 
         // Atributo const static
-        static const int maxPlayers = 4;
+        static const int maxPlayers = 10;
 
         // Métodos estáticos
         static void printGameCount();
         static void applyGravity(FlappyBus&);
 
         // Métodos para histórico de vitórias
-        void registerWin(const std::string& playerName);
+        void registerWin(const std::string&);
         void displayWinHistory() const;
 
+        // Sobrecarga dos operadores
+        GameManager& operator=(const GameManager&);
+        bool operator==(const GameManager&) const;
+        bool operator!=(const GameManager& ) const;
+        bool operator!() const;
 
     private:
         // Array const static

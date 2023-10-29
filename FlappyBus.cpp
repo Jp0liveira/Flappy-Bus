@@ -91,3 +91,47 @@ void FlappyBus::displayInfo() const {
     std::cout << "Pontuacao maxima: " << scoreManager.getMaxScore() << std::endl;
 
 }
+
+
+FlappyBus& FlappyBus::operator=(const FlappyBus& other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    this->position = other.position;
+    this->velocity = other.velocity;
+    this->score = other.score;
+    this->playerName = other.playerName;
+    this->hadCollision = other.hadCollision;
+
+    return *this;
+}
+
+bool FlappyBus::operator==(const FlappyBus& other) const {
+    if (this == &other) {
+        return true;
+    }
+
+    return this->position == other.position &&
+           this->velocity == other.velocity &&
+           this->score == other.score &&
+           this->playerName == other.playerName &&
+           this->hadCollision == other.hadCollision;
+}
+
+bool FlappyBus::operator!=(const FlappyBus& other) const {
+    return !(*this == other);
+}
+
+bool FlappyBus::operator!() const {
+    return hadCollision;
+}
+
+std::ostream& operator<<(std::ostream& os, const FlappyBus& flappyBus) {
+    os << "Nome do Jogador: " << flappyBus.playerName << std::endl;
+    os << "Posicao do onibus: " << flappyBus.position << std::endl;
+    os << "Velocidade do onibus: " << flappyBus.velocity << std::endl;
+    os << "Pontuacao: " << flappyBus.score << std::endl;
+    os << "Pontuacao maxima: " << flappyBus.scoreManager.getMaxScore() << std::endl;
+    return os;
+}

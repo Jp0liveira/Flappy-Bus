@@ -3,7 +3,7 @@
 #include "ScoreManager.h"
 
 class FlappyBus {
-
+         friend std::ostream& operator<<(std::ostream& os, const FlappyBus& flappyBus);
     public:
         // Construtor padrão
         FlappyBus();
@@ -29,7 +29,13 @@ class FlappyBus {
         void jump(); // Usa a classe ScoreManager
         void displayInfo() const;
         bool didCollide(int position, double velocity);
-        
+
+         // Sobrecarga de operadores
+        FlappyBus& operator=(const FlappyBus& other);
+        bool operator==(const FlappyBus& other) const;
+        bool operator!=(const FlappyBus& other) const;
+        bool operator!() const;
+
     private:
         int position;
         double velocity;

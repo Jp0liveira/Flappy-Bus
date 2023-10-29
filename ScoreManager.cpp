@@ -28,3 +28,35 @@ int ScoreManager::increaseScore() {
 bool ScoreManager::isMaxScoreReached() const {
     return score >= MAXSCORE;
 }
+
+// Sobrecarga dos Operadores
+ScoreManager& ScoreManager::operator=(const ScoreManager& other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    this->score = other.score;
+    return *this;
+}
+
+bool ScoreManager::operator==(const ScoreManager& other) const {
+    if (this == &other) {
+        return true;
+    }
+
+    return this->score == other.score;
+}
+
+bool ScoreManager::operator!=(const ScoreManager& other) const {
+    return !(*this == other);
+}
+
+bool ScoreManager::operator!() const {
+    return score == 0;
+}
+
+std::ostream& operator<<(std::ostream& os, const ScoreManager& scoreManager) {
+    os << "Score Atual: " << scoreManager.score << std::endl;
+    os << "Pontuacao Maxima: " << scoreManager.MAXSCORE << std::endl;
+    return os;
+}
