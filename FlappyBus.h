@@ -1,6 +1,26 @@
 #pragma once
 #include <string>
+#include <map>
+#include <vector>
 #include "ScoreManager.h"
+
+struct ObstaculoEmMovimento {
+    int positionX;
+    int positionY;
+    double speedX;
+    double speedY;
+
+    ObstaculoEmMovimento(int posX, int posY, double spdX, double spdY);
+};
+
+struct ObstaculoEstatico {
+    int positionX;
+    int positionY;
+    int width;
+    int height;
+
+    ObstaculoEstatico(int posX, int posY, int w, int h);
+};
 
 class FlappyBus {
          friend std::ostream& operator<<(std::ostream& os, const FlappyBus& flappyBus);
@@ -28,7 +48,7 @@ class FlappyBus {
         // Métodos adicionais
         void jump(); // Usa a classe ScoreManager
         void displayInfo() const;
-        bool didCollide(int position, double velocity);
+        bool didCollide();
 
          // Sobrecarga de operadores
         FlappyBus& operator=(const FlappyBus& other);
@@ -39,6 +59,13 @@ class FlappyBus {
         // Métodos para registro de eventos do jogo
         void addEvent(const std::string& eventDescription);
         void displayEventLog() const;
+        
+        // Uso do STL MAP
+        std::map<int, std::string> getPlayerEvents() const;
+        
+        // Uso das Structs
+        void addObstaculoEmMovimento(int posX, int posY, double spdX, double spdY);
+        void addObstaculoEstatico(int posX, int posY, int w, int h);
 
     private:
         int position;
@@ -60,5 +87,8 @@ class FlappyBus {
 
         void allocateMemory(int newSize);
 
-            
+        // Uso das Structs
+        std::vector<ObstaculoEmMovimento> obstaculosEmMovimento;
+        std::vector<ObstaculoEstatico> obstaculosEstaticos;
+       
 };

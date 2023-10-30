@@ -1,14 +1,20 @@
 #include "ScoreManager.h"
 
-ScoreManager::ScoreManager() : score(0), MAXSCORE(100) {}
+ScoreManager::ScoreManager() : score(0), MAXSCORE(100), scoreHistory(nullptr), historySize(0), historyCount(0) {}
 
-ScoreManager::ScoreManager(int max) : score(0), MAXSCORE(max) {}
+ScoreManager::ScoreManager(int max, int historySize) : score(0), MAXSCORE(max),  scoreHistory(new int[historySize]), historySize(historySize), historyCount(0) {}
 
-ScoreManager::ScoreManager(const ScoreManager &c_score): MAXSCORE(c_score.MAXSCORE){
+ScoreManager::ScoreManager(const ScoreManager &c_score): MAXSCORE(c_score.MAXSCORE), scoreHistory(new int[c_score.historySize]), historySize(c_score.historySize), historyCount(c_score.historyCount){
     this->score = c_score.score;
+    for (int i = 0; i < historyCount; ++i) {
+        this->scoreHistory[i] = c_score.scoreHistory[i];
+    }
+    
 }
 
-ScoreManager::~ScoreManager(){}
+ScoreManager::~ScoreManager(){
+      delete[] scoreHistory;
+}
 
 int ScoreManager::getCurrentScore() const {
     return score;
@@ -20,13 +26,30 @@ int ScoreManager::getMaxScore() const {
 
 int ScoreManager::increaseScore() {
     if (!isMaxScoreReached()) {
-         return score++;
+        recordScore(score + 1);  // Registro de pontuação no histórico
+        return score++;
     }
     return 0;
 }
 
 bool ScoreManager::isMaxScoreReached() const {
     return score >= MAXSCORE;
+}
+
+//Alocação de memória
+void ScoreManager::recordScore(int newScore) {
+    if (historyCount >= historySize) {
+        int newHistorySize = historySize * 2;
+        int* newScoreHistory = new int[newHistorySize];
+        for (int i = 0; i < historyCount; ++i) {
+            newScoreHistory[i] = scoreHistory[i];
+        }
+
+        delete[] scoreHistory;
+        scoreHistory = newScoreHistory;
+        historySize = newHistorySize;
+    }
+    scoreHistory[historyCount++] = newScore;
 }
 
 // Sobrecarga dos Operadores

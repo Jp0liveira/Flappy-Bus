@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include "FlappyBus.h"
 
 class GameManager {
@@ -29,6 +30,11 @@ class GameManager {
         void registerWin(const std::string&);
         void displayWinHistory() const;
 
+        // Uso do Vector
+        void addPlayerToGame(FlappyBus* player);
+        void removePlayerFromGame(const std::string& playerName);
+        void displayPlayersInGame() const;
+
         // Sobrecarga dos operadores
         GameManager& operator=(const GameManager&);
         bool operator==(const GameManager&) const;
@@ -47,6 +53,8 @@ class GameManager {
         inline static void printWelcomeMessage() {
             std::cout << "Bem-vindo ao Flappy Bus Game!" << std::endl;
         }
+
+        std::vector<FlappyBus*> playersInGame; // Usando std::vector para armazenar os jogadores em jogo
 
         // Histórico de vitórias
         std::string* winHistory;

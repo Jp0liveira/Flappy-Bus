@@ -1,6 +1,12 @@
 #include <iostream>
 #include "FlappyBus.h"
 
+ObstaculoEmMovimento::ObstaculoEmMovimento(int posX, int posY, double spdX, double spdY)
+    : positionX(posX), positionY(posY), speedX(spdX), speedY(spdY) {}
+
+ObstaculoEstatico::ObstaculoEstatico(int posX, int posY, int w, int h)
+    : positionX(posX), positionY(posY), width(w), height(h) {}
+
 FlappyBus::FlappyBus(): position(5), velocity(3), score(0), playerName("Player"), eventLog(nullptr), eventLogSize(0), eventCount(0) {}
 
 FlappyBus::FlappyBus(int initialPosition, double initialVelocity, const std::string& name): position(initialPosition), velocity(initialVelocity), score(0), playerName(name), eventLog(nullptr), eventLogSize(0), eventCount(0){}
@@ -22,6 +28,8 @@ FlappyBus::FlappyBus(const FlappyBus &c_flappyBus){
 
 FlappyBus::~FlappyBus(){
     delete[] eventLog;
+    obstaculosEmMovimento.clear();
+    obstaculosEstaticos.clear();
 }
 
 int FlappyBus::getPosition() const {
@@ -67,11 +75,7 @@ int FlappyBus::MaxScore(const ScoreManager& c_scoreManager){
 void FlappyBus::jump() {
     this->increaseScore();
     this->update();
-    if (didCollide(this->position, this->velocity)){
-        std::cout << "Colidiu!" << std::endl;
-    }else{
-         std::cout << "Nao colidiu!" << std::endl;
-    }
+    this->didCollide();
 }
 
 void FlappyBus::update() {
@@ -79,11 +83,29 @@ void FlappyBus::update() {
     velocity += 1;
 }
 
-bool FlappyBus::didCollide(int position, double velocity){
-    const int collisionMargin = 1;
-    if (abs(position - velocity) <= collisionMargin){
-       hadCollision = true;
+bool FlappyBus::didCollide() {
+    const int collisionMargin = 2;
+
+    // Verifica colisão com obstáculos em movimento
+    for (const ObstaculoEmMovimento& obstaculo : obstaculosEmMovimento) {
+        if (abs(position - obstaculo.positionX) <= collisionMargin) {
+            if (abs(velocity - obstaculo.speedY) <= collisionMargin) {
+                hadCollision = true;
+                return hadCollision;
+            }
+        }
     }
+
+    // Verifica colisão com obstáculos estáticos
+    for (const ObstaculoEstatico& obstaculo : obstaculosEstaticos) {
+        if (position >= obstaculo.positionX && position <= (obstaculo.positionX + obstaculo.width)) {
+            if (abs(position - obstaculo.positionY) <= collisionMargin) {
+                hadCollision = true;
+                return hadCollision;
+            }
+        }
+    }
+
     return hadCollision;
 }
 
@@ -123,6 +145,26 @@ void FlappyBus::allocateMemory(int newSize) {
     delete[] eventLog;
     eventLog = newEventLog;
     eventLogSize = newSize;
+}
+
+// Uso do STL MAP
+std::map<int, std::string> FlappyBus::getPlayerEvents() const {
+    std::map<int, std::string> events;
+    for (int i = 0; i < eventCount; ++i) {
+        events[i] = eventLog[i];
+    }
+    return events;
+}
+
+// Uso das Structs
+void FlappyBus::addObstaculoEmMovimento(int posX, int posY, double spdX, double spdY) {
+    ObstaculoEmMovimento obstaculo(posX, posY, spdX, spdY);
+    obstaculosEmMovimento.push_back(obstaculo);
+}
+
+void FlappyBus::addObstaculoEstatico(int posX, int posY, int w, int h) {
+    ObstaculoEstatico obstaculo(posX, posY, w, h);
+    obstaculosEstaticos.push_back(obstaculo);
 }
 
 // Sobrecarga dos Operadores

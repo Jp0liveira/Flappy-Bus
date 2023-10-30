@@ -6,6 +6,7 @@ double GameManager::gravity = 9.8;
 const int GameManager::levelScores[maxLevels] = {5, 10, 15, 20, 30};
 
 GameManager::GameManager(): winHistory(nullptr), winHistorySize(0), winCount(0) {
+    playersInGame.reserve(maxPlayers);
      for (int i = 0; i < maxPlayers; ++i) {
         playerScores[i] = 0;
     }
@@ -15,6 +16,7 @@ GameManager::GameManager(): winHistory(nullptr), winHistorySize(0), winCount(0) 
 GameManager::GameManager(int initialGameCount, double initialGravity): winHistory(nullptr), winHistorySize(0), winCount(0) {
     gameCount = initialGameCount;
     gravity = initialGravity;
+    playersInGame.reserve(maxPlayers);
     for (int i = 0; i < maxPlayers; ++i) {
         playerScores[i] = 0;
     }
@@ -25,6 +27,12 @@ GameManager::GameManager(const GameManager& c_gameManager) {
     this->gravity = c_gameManager.gravity;
     for (int i = 0; i < maxPlayers; ++i) {
         playerScores[i] = c_gameManager.playerScores[i];
+    }
+
+    // Copiar jogadores em jogo, alocando memória para novos objetos FlappyBus
+    for (const FlappyBus* player : c_gameManager.playersInGame) {   
+        FlappyBus* newPlayer = new FlappyBus(*player);
+        playersInGame.push_back(newPlayer);
     }
 
     // Copiar o histórico de vitórias
@@ -38,6 +46,9 @@ GameManager::GameManager(const GameManager& c_gameManager) {
 
 GameManager::~GameManager(){
      delete[] winHistory;  // Libere a memória alocada para o histórico de vitórias
+     for (FlappyBus* player : playersInGame) {   // Liberar a memória alocada para jogadores em jogo
+        delete player;
+    }
 }
 
 
@@ -73,6 +84,34 @@ void GameManager::applyGravity(FlappyBus& player) {
     player.setVelocity(player.getVelocity() + gravity);
 }
 
+// Uso do vector
+void GameManager::addPlayerToGame(FlappyBus* player) {
+    if (playersInGame.size() < maxPlayers) {
+        playersInGame.push_back(player);
+    } else {
+        std::cout << "Nao e possivel adicionar mais jogadores. O limite foi atingido." << std::endl;
+    }
+}
+
+void GameManager::removePlayerFromGame(const std::string& playerName) {
+    for (auto it = playersInGame.begin(); it != playersInGame.end(); ++it) {
+        if ((*it)->getPlayerName() == playerName) {
+            delete *it; // Liberar a memória alocada para o jogador removido
+            playersInGame.erase(it);
+            return;
+        }
+    }
+    std::cout << "Jogador não encontrado no jogo." << std::endl;
+}
+
+void GameManager::displayPlayersInGame() const {
+    std::cout << "Jogadores em jogo:" << std::endl;
+    for (const FlappyBus* player : playersInGame) {
+        std::cout << *player << std::endl;
+    }
+}
+
+// Alocação de memória
 void GameManager::registerWin(const std::string& playerName) {
     if (winCount >= winHistorySize) {
         allocateMemory(winHistorySize + 1);
