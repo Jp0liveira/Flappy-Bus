@@ -81,6 +81,18 @@ void FlappyBus::jump() {
 void FlappyBus::update() {
     position += velocity;
     velocity += 1;
+
+    // Verica se o power-up ainda está em uso
+    if (usingPowerUp) {
+        std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
+        std::chrono::duration<double> elapsedSeconds = std::chrono::duration_cast<std::chrono::duration<double>>(currentTime - powerUpStartTime);
+
+        if (elapsedSeconds >= powerUpDuration) {
+            // O power-up expirou; restaurando a velocidade normal
+            velocity = baseVelocity;
+            usingPowerUp = false;
+        }
+    }
 }
 
 bool FlappyBus::didCollide() {
@@ -165,6 +177,44 @@ void FlappyBus::addObstaculoEmMovimento(int posX, int posY, double spdX, double 
 void FlappyBus::addObstaculoEstatico(int posX, int posY, int w, int h) {
     ObstaculoEstatico obstaculo(posX, posY, w, h);
     obstaculosEstaticos.push_back(obstaculo);
+}
+
+// Uso da classe PoweUp
+void FlappyBus::addPowerUp(const PowerUp& powerUp) {
+    powerUps.push_back(powerUp);
+}
+
+void FlappyBus::usePowerUp(const PowerUp& powerUp) {
+    // Verifique se o FlappyBus possui o power-up
+    bool found = false;
+    for (auto it = powerUps.begin(); it != powerUps.end(); ++it) {
+        if (it->getName() == powerUp.getName()) {
+            if (it->getName() == "SpeedBoost") {
+                baseVelocity = velocity; // Armazena a velocidade normal
+                velocity -= 2;
+                powerUpDuration = std::chrono::seconds(powerUp.getDuration()); // Duração
+                powerUpStartTime = std::chrono::steady_clock::now();
+                usingPowerUp = true;
+            }
+            // Remove o power-up após o uso
+            powerUps.erase(it);
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        std::cout << "FlappyBus nao possui o power-up: " << powerUp.getName() << std::endl;
+    }
+}
+
+bool FlappyBus::hasPowerUp(const std::string& powerUpName) const {
+    for (const PowerUp& powerUp : powerUps) {
+        if (powerUp.getName() == powerUpName) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Sobrecarga dos Operadores

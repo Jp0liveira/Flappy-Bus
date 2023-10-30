@@ -27,9 +27,17 @@ int ScoreManager::getMaxScore() const {
 int ScoreManager::increaseScore() {
     if (!isMaxScoreReached()) {
         recordScore(score + 1);  // Registro de pontuação no histórico
+        scoreDate.setCurrentDate(); // Define a data e hora atual
         return score++;
     }
     return 0;
+}
+
+void ScoreManager::displayScoreData() const {
+    std::cout << "Score Atual: " << score << std::endl;
+    std::cout << "Pontuacao Maxima: " << MAXSCORE << std::endl;
+    std::cout << "Data e Hora do Registro: ";
+    scoreDate.print(); // Exibe a data e hora do registro
 }
 
 bool ScoreManager::isMaxScoreReached() const {

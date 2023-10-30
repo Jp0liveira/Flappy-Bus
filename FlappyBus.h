@@ -3,6 +3,9 @@
 #include <map>
 #include <vector>
 #include "ScoreManager.h"
+#include "PowerUp.h"
+#include <chrono> // Para usar chrono para medir o tempo
+#include <thread> // Para pausar a execução por um tempo
 
 struct ObstaculoEmMovimento {
     int positionX;
@@ -67,6 +70,14 @@ class FlappyBus {
         void addObstaculoEmMovimento(int posX, int posY, double spdX, double spdY);
         void addObstaculoEstatico(int posX, int posY, int w, int h);
 
+        // Métodos para PowerUps
+        void addPowerUp(const PowerUp& powerUp);
+        void usePowerUp(const PowerUp& powerUp);
+        bool hasPowerUp(const std::string& powerUpName) const;
+
+        bool isUsingPowerUp() { return usingPowerUp;};
+
+
     private:
         int position;
         double velocity;
@@ -90,5 +101,12 @@ class FlappyBus {
         // Uso das Structs
         std::vector<ObstaculoEmMovimento> obstaculosEmMovimento;
         std::vector<ObstaculoEstatico> obstaculosEstaticos;
+
+        // Uso da classe powerUp
+        std::vector<PowerUp> powerUps;
+        double baseVelocity; // Velocidade normal do FlappyBus
+        std::chrono::steady_clock::time_point powerUpStartTime;
+        std::chrono::seconds powerUpDuration;
+        bool usingPowerUp =  false;
        
 };

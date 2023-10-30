@@ -10,4 +10,10 @@
 #include "GameManager.h"
 #include "GameManager.cpp"
 
+#include "PowerUp.h"
+#include "PowerUp.cpp"
+
+#include "Data.h"
+#include "Data.cpp"
+
 #endif // MAIN_INCLUDES_H

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Data.h"
 class ScoreManager {
         friend std::ostream& operator<<(std::ostream& os, const ScoreManager& scoreManager);
     public:
@@ -26,6 +26,8 @@ class ScoreManager {
         bool operator!=(const ScoreManager& other) const;
         bool operator!() const;
 
+        void displayScoreData() const;
+
     private:
         int score;
         const int MAXSCORE;
@@ -33,6 +35,8 @@ class ScoreManager {
         // Histórico de pontuação
         int* scoreHistory;  
         int historySize;   
-        int historyCount;   
+        int historyCount;
+
+        Data scoreDate;
 
 };
