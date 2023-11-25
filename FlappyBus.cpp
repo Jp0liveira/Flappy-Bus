@@ -253,9 +253,9 @@ bool FlappyBus::operator!() const {
 }
 
 std::ostream& operator<<(std::ostream& os, const FlappyBus& flappyBus) {
-    os << "Nome do Jogador: " << flappyBus.playerName << std::endl;
-    os << "Posicao do onibus: " << flappyBus.position << std::endl;
-    os << "Velocidade do onibus: " << flappyBus.velocity << std::endl;
+    os << "Nome: " << flappyBus.playerName << std::endl;
+    os << "Posicao: " << flappyBus.position << std::endl;
+    os << "Velocidade: " << flappyBus.velocity << std::endl;
     os << "Pontuacao: " << flappyBus.score << std::endl;
     os << "Pontuacao maxima: " << flappyBus.scoreManager.getMaxScore() << std::endl;
     return os;
