@@ -1,21 +1,19 @@
 #include <iostream>
-#include <algorithm>
 #include "main_includes.h"
 
 int main() {
-   // Cria um PowerUp usando o construtor padrão
-    PowerUp powerUp1;
-    
-    // Cria outro PowerUp usando o construtor com parâmetros
-    PowerUp powerUp2("SpeedBoost", 500);
+     Vehicle myCar(2, 5.7, "Meu veiculo", 70, "busuBusOleo"); 
+     std::cout << "Informacoes antes de carregar os dados:\n";
+     std::cout << myCar;
+    // Carregar variáveis do arquivo
+    if (myCar.loadVariablesFromFile("config.txt")) {
+        // Processar variáveis e exibir informações
+        std::cout << "Informacoes apos carregar os dados:\n";
+        std::cout << myCar;
 
-    // Cria um terceiro PowerUp usando o construtor de cópia
-    PowerUp powerUp3 = powerUp2;
-
-    // Exibe informações sobre os PowerUps
-    std::cout << "PowerUp 1: Nome=" << powerUp1.getName() << ", Duracao=" << powerUp1.getDuration() << std::endl;
-    std::cout << "PowerUp 2: Nome=" << powerUp2.getName() << ", Durcao=" << powerUp2.getDuration() << std::endl;
-    std::cout << "PowerUp 3: Nome=" << powerUp3.getName() << ", Duracao=" << powerUp3.getDuration() << std::endl;
+        // Salvando as variáveis em um novo arquivo
+        myCar.saveVariablesToFile("new_config.txt");
+    }
 
     return 0;
 

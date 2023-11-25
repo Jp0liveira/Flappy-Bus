@@ -1,0 +1,5 @@
+initialPosition = 5
+initialVelocity = 10.5
+name = Busbus
+fuelCapacity = 60
+fuelType = busbusGasolina

@@ -16,4 +16,7 @@
 #include "Data.h"
 #include "Data.cpp"
 
+#include "Vehicle.h"
+#include "Vehicle.cpp"
+
 #endif // MAIN_INCLUDES_H

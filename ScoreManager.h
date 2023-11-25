@@ -1,5 +1,6 @@
 #pragma once
 #include "Data.h"
+
 class ScoreManager {
         friend std::ostream& operator<<(std::ostream& os, const ScoreManager& scoreManager);
     public:

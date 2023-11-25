@@ -126,9 +126,9 @@ void FlappyBus::increaseScore() {
 }
 
 void FlappyBus::displayInfo() const {
-    std::cout << "\nNome do Jogador: " << playerName << std::endl;
-    std::cout << "Posicao do onibus: " << position << std::endl;
-    std::cout << "Velocidade do onibus: " << velocity << std::endl;
+    std::cout << "\nNome: " << playerName << std::endl;
+    std::cout << "Posicao: " << position << std::endl;
+    std::cout << "Velocidade: " << velocity << std::endl;
     std::cout << "Pontuacao: " << score << std::endl;
     std::cout << "Pontuacao maxima: " << scoreManager.getMaxScore() << std::endl;
 
