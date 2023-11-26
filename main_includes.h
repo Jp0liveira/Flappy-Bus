@@ -22,4 +22,7 @@
 #include "SportsCar.h"
 #include "SportsCar.cpp"
 
+#include "ElectricCar.h"
+#include "ElectricCar.cpp"
+
 #endif // MAIN_INCLUDES_H

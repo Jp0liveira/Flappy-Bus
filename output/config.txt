@@ -1,6 +1,7 @@
 initialPosition = 5
 initialVelocity = 10.5
 fuelCapacity = 60
-fuelType = busbusGasolina
+fuelType = teste
 name = Busbus
-turbo = false
+batteryCapacity = 130
+connectorType = Type1

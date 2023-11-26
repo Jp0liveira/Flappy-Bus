@@ -2,7 +2,7 @@
 #include "main_includes.h"
 
 int main() {
-     SportsCar myCar(2, 5.7, "Meu veiculo", 70, "busuBusOleo", false); 
+     ElectricCar myCar(2, 5.7, "Meu veiculo", 70, 220, "Tipo 1"); 
      std::cout << "Informacoes antes de carregar os dados:\n";
      std::cout << myCar;
     // Carregar variáveis do arquivo
