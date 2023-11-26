@@ -21,7 +21,7 @@ void Vehicle::setFuelCapacity(int fuelCapacity){
     this->fuelCapacity = fuelCapacity;
 }
 
-int Vehicle::getFuelCapacity(){
+int Vehicle::getFuelCapacity() const{
    return fuelCapacity;
 }
 
@@ -97,7 +97,7 @@ std::ostream& operator<<(std::ostream& os, const Vehicle& vehicle) {
 }
 
 // Carregamento de arquivos
-bool isNumeric(const std::string& str) {
+bool Vehicle::isNumeric(const std::string& str) {
     return !str.empty() && std::all_of(str.begin(), str.end(), [](char c) {
         return std::isdigit(c) || c == '.' || c == '-';
     });

@@ -3,3 +3,4 @@ initialVelocity = 10.5
 fuelCapacity = 60
 fuelType = busbusGasolina
 name = Busbus
+turbo = false

@@ -23,7 +23,7 @@ class Vehicle : public FlappyBus {
 
         void setFuelCapacity(int fuelCapacity);
         void setfuelType(const std::string& fuelType);
-        int getFuelCapacity();
+        int getFuelCapacity() const;
         std::string getFuelType() const;
 
         Vehicle& operator=(const Vehicle& other);
@@ -35,6 +35,7 @@ class Vehicle : public FlappyBus {
         bool loadVariablesFromFile(const std::string& filename);
         bool processVariables(const std::map<std::string, double>& variables, const std::map<std::string, std::string>& stringVariables);
         bool saveVariablesToFile(const std::string& filename) const;
+        bool isNumeric(const std::string& str);
 
     protected:
         int fuelCapacity;

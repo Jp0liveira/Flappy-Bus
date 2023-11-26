@@ -19,4 +19,7 @@
 #include "Vehicle.h"
 #include "Vehicle.cpp"
 
+#include "SportsCar.h"
+#include "SportsCar.cpp"
+
 #endif // MAIN_INCLUDES_H
