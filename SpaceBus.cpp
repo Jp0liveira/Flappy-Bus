@@ -1,16 +1,13 @@
 #include "SpaceBus.h"
 
-// Construtores
 SpaceBus::SpaceBus() : FlappyBus(), propulsionType("Unknown"), hatchOpen(false), environmentalTemperature(22.0), environmentalPressure(1.0), environmentalOxygenLevel(20.9), destination("Undefined") {}
 
 SpaceBus::SpaceBus(int initialPosition, double initialVelocity, const std::string& name, const std::string& propulsionType): FlappyBus(initialPosition, initialVelocity, name), propulsionType(propulsionType), hatchOpen(false), environmentalTemperature(22.0), environmentalPressure(1.0), environmentalOxygenLevel(20.9), destination("Undefined") {}
 
 SpaceBus::SpaceBus(const SpaceBus& other) : FlappyBus(other), propulsionType(other.propulsionType), hatchOpen(other.hatchOpen), environmentalTemperature(other.environmentalTemperature), environmentalPressure(other.environmentalPressure), environmentalOxygenLevel(other.environmentalOxygenLevel), destination(other.destination) {}
 
-// Destrutor
 SpaceBus::~SpaceBus() {}
 
-// Métodos adicionais
 void SpaceBus::openHatch() {
     hatchOpen = true;
     std::cout << getPlayerName() << " abriu a escotilha espacial.\n";
@@ -36,7 +33,6 @@ void SpaceBus::setDestination(const std::string& newDestination) {
 void SpaceBus::navigate() {
     std::cout << getPlayerName() << " esta navegando pelo espaco para chegar a " << destination << ".\n";
 }
-
 
 // Sobrecargas de Operadores
 SpaceBus& SpaceBus::operator=(const SpaceBus& other) {
