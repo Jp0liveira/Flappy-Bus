@@ -1,7 +1,4 @@
 initialPosition = 5
 initialVelocity = 10.5
-fuelCapacity = 60
-fuelType = teste
 name = Busbus
-batteryCapacity = 130
-connectorType = Type1
+propulsionType = warPulsion

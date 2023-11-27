@@ -25,4 +25,7 @@
 #include "ElectricCar.h"
 #include "ElectricCar.cpp"
 
+#include "SpaceBus.h"
+#include "SpaceBus.cpp"
+
 #endif // MAIN_INCLUDES_H
