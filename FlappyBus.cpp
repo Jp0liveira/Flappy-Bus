@@ -261,3 +261,71 @@ std::ostream& operator<<(std::ostream& os, const FlappyBus& flappyBus) {
     return os;
 }
 
+// Carregamento de arquivos
+bool FlappyBus::isNumeric(const std::string& str) {
+    return !str.empty() && std::all_of(str.begin(), str.end(), [](char c) {
+        return std::isdigit(c) || c == '.' || c == '-';
+    });
+}
+
+bool FlappyBus::loadVariablesFromFile(const std::string& filename) {
+    std::ifstream inputFile(filename);
+    if (!inputFile.is_open()) {
+        std::cerr << "Error opening file: " << filename << '\n';
+        return false;
+    }
+
+    std::map<std::string, double> numericVariables;
+    std::map<std::string, std::string> stringVariables;
+
+    std::string line;
+    std::string variableName;
+    char equalsSign;
+    std::string value;
+
+    while (std::getline(inputFile, line)) {
+        std::istringstream iss(line);
+        if (iss >> variableName >> equalsSign >> value && equalsSign == '=') {
+            if (isNumeric(value)) {
+                double numericValue = std::stod(value);
+                numericVariables[variableName] = numericValue;
+            } else {
+                stringVariables[variableName] = value;
+            }
+        } else {
+            std::cerr << "Error parsing line: " << line << '\n';
+        }
+    }
+
+    inputFile.close();
+    return processVariables(numericVariables, stringVariables);
+}
+
+bool FlappyBus::processVariables(const std::map<std::string, double>& numericVariables, const std::map<std::string, std::string>& stringVariables) {
+    if (numericVariables.find("initialPosition") != numericVariables.end())
+        this->position = static_cast<int>(numericVariables.at("initialPosition"));
+
+    if (numericVariables.find("initialVelocity ") != numericVariables.end())
+        this->velocity = numericVariables.at("initialVelocity ");
+
+    if (stringVariables.find("name") != stringVariables.end())
+        this->playerName = stringVariables.at("name");
+
+    return true;
+}
+
+bool FlappyBus::saveVariablesToFile(const std::string& filename) const {
+    std::ofstream outputFile(filename);
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening file for writing: " << filename << '\n';
+        return false;
+    }
+
+    outputFile << "position = " << getPosition() << '\n';
+    outputFile << "velocity = " << getVelocity() << '\n';
+    outputFile << "playerName = " << getPlayerName() << '\n';
+
+    outputFile.close();
+
+    return true;
+}

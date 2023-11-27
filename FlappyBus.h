@@ -6,6 +6,12 @@
 #include "PowerUp.h"
 #include <chrono> // Para usar chrono para medir o tempo
 #include <thread> // Para pausar a execução por um tempo
+#include <fstream>
+#include <sstream>
+#include <cctype>
+#include <iomanip>
+#include <algorithm>
+
 
 struct ObstaculoEmMovimento {
     int positionX;
@@ -77,6 +83,11 @@ class FlappyBus {
 
         bool isUsingPowerUp() { return usingPowerUp;};
 
+        // Métodos para carregamento de arquivos
+        bool loadVariablesFromFile(const std::string& filename);
+        bool processVariables(const std::map<std::string, double>& numericVariables, const std::map<std::string, std::string>& stringVariables);
+        bool saveVariablesToFile(const std::string& filename) const;
+        bool isNumeric(const std::string& str);
 
     private:
         int position;

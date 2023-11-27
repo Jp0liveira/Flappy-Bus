@@ -2,7 +2,7 @@
 #include "main_includes.h"
 
 int main() {
-     SpaceBus myCar(2, 5.7, "Meu veiculo", "SpaceBus Jump"); 
+     FlappyBus myCar(2, 5.7, "FlappyBus"); 
      std::cout << "Informacoes antes de carregar os dados:\n";
      std::cout << myCar;
     // Carregar variáveis do arquivo
