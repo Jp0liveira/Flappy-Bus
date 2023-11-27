@@ -305,8 +305,8 @@ bool FlappyBus::processVariables(const std::map<std::string, double>& numericVar
     if (numericVariables.find("initialPosition") != numericVariables.end())
         this->position = static_cast<int>(numericVariables.at("initialPosition"));
 
-    if (numericVariables.find("initialVelocity ") != numericVariables.end())
-        this->velocity = numericVariables.at("initialVelocity ");
+    if (numericVariables.find("initialVelocity") != numericVariables.end())
+        this->velocity = numericVariables.at("initialVelocity");
 
     if (stringVariables.find("name") != stringVariables.end())
         this->playerName = stringVariables.at("name");
