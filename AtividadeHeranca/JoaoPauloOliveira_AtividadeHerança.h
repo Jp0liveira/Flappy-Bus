@@ -1430,5 +1430,7 @@ ElectricCar::ElectricCar(const ElectricCar& other) : Vehicle(other), batteryCapa
       Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avaliado.*/
 
     //Link arquivo de configuração no repositório
+        https://github.com/Jp0liveira/Flappy-Bus/tree/desenvolvimento
 
     //Link vídeo mostrando a execução do código usando o arquivo de configuração
+        https://drive.google.com/file/d/1ostTRylKfoqzqLkdDOLSHdg1xZTEEFda/view?usp=sharing
