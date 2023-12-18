@@ -28,4 +28,13 @@
 #include "SpaceBus.h"
 #include "SpaceBus.cpp"
 
+#include "GameCharacter.h"
+#include "GameCharacter.cpp"
+
+#include "ObstacleCharacter.h"
+#include "ObstacleCharacter.cpp"
+
+#include "FloatingObstacle.h"
+#include "FloatingObstacle.cpp"
+
 #endif // MAIN_INCLUDES_H

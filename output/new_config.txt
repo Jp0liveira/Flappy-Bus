@@ -1,3 +1,4 @@
-position = 5
-velocity = 5.7
-playerName = BusbusFlapy
+initialPosition = 5
+initialVelocity = 10.5
+name = BusbusFlapy
+characterClass = Busbusbus
