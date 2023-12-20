@@ -1,5 +1,5 @@
 initialPosition = 5
 initialVelocity = 10.5
 name = BusbusFlapy
-gasLevel = 300
+gasLevel = 50
 isOnFire = true

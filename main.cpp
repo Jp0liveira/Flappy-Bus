@@ -3,7 +3,7 @@
 
 int main() {
    
-    WaterBalloon balloon1(0, 10.0);
+    HotAirBalloon balloon1(0, 10.0);
     std::cout << "Informacoes iniciais do Balao:\n";
     std::cout << balloon1;
         

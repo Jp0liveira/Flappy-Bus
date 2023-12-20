@@ -15,6 +15,11 @@ class HotAirBalloon : public FloatingObstacle {
 
         void releaseGas();
 
+        double setGasLevel(double newGasLevel);
+        static const double defaultMaxGasLevel;  // Valor máximo padrão para gasLevel
+        static const double minGasLevel;         // Valor mínimo permitido para gasLevel
+        static double maxGasLevel;               // Valor máximo permitido para gasLevel
+
         // Sobrecarga dos operadores
         HotAirBalloon& operator=(const HotAirBalloon& other);
         bool operator==(const HotAirBalloon& other) const;

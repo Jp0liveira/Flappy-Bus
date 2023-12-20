@@ -1,9 +1,13 @@
 #include "HotAirBalloon.h"
 
-HotAirBalloon::HotAirBalloon() : FloatingObstacle(), gasLevel(100.0) {}
+const double HotAirBalloon::defaultMaxGasLevel = 100.0; // Valor máximo padrão
+const double HotAirBalloon::minGasLevel = 0.0; // Valor mínimo permitido
+double HotAirBalloon::maxGasLevel = HotAirBalloon::defaultMaxGasLevel; // Inicializa com o valor padrão
+
+HotAirBalloon::HotAirBalloon() : FloatingObstacle(), gasLevel(maxGasLevel) {}
 
 HotAirBalloon::HotAirBalloon(int initialPosition, double initialVelocity)
-    : FloatingObstacle(initialPosition, initialVelocity), gasLevel(100.0) {}
+    : FloatingObstacle(initialPosition, initialVelocity), gasLevel(maxGasLevel) {}
 
 HotAirBalloon::HotAirBalloon(const HotAirBalloon& other)
     : FloatingObstacle(other), gasLevel(other.gasLevel) {}
@@ -28,6 +32,16 @@ void HotAirBalloon::releaseGas() {
     } else {
         std::cout << "HotAirBalloon has no gas left!" << std::endl;
     }
+}
+
+double HotAirBalloon::setGasLevel(double newGasLevel) {
+    // Verifica se o novo nível de gás está dentro dos limites
+    if (newGasLevel >= minGasLevel && newGasLevel <= maxGasLevel) {
+        gasLevel = newGasLevel;
+    } else {
+        gasLevel = minGasLevel;
+    }
+    return gasLevel;
 }
 
 // Sobrecarga dos operadores
@@ -124,7 +138,7 @@ bool HotAirBalloon::processVariables(const std::map<std::string, double>& numeri
         setPlayerName(stringVariables.at("name"));
 
     if (numericVariables.find("gasLevel") != numericVariables.end())
-        this->gasLevel = numericVariables.at("gasLevel");
+        this->gasLevel = this->setGasLevel(numericVariables.at("gasLevel"));
 
     return true;
 }
