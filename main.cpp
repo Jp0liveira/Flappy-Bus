@@ -3,21 +3,26 @@
 
 int main() {
    
-    HotAirBalloon balloon1(0, 10.0);
-    std::cout << "Informacoes iniciais do Balao:\n";
-    std::cout << balloon1;
-        
-    std::cout << "Informacoes antes de carregar os dados:\n";
-    std::cout << balloon1;
-    // Carregar variáveis do arquivo
-    if (balloon1.loadVariablesFromFile("config.txt")) {
-        // Processar variáveis e exibir informações
-        std::cout << "Informacoes apos carregar os dados:\n";
-        std::cout <<balloon1;
+    // Criando instâncias de balões
+    HotAirBalloon* hotAirBalloon = new HotAirBalloon();
+    FireBalloon* fireBalloon = new FireBalloon(1, 10.0);
+    WaterBalloon* waterBalloon = new WaterBalloon(2, 8.0);
 
-        // Salvando as variáveis em um novo arquivo
-        balloon1.saveVariablesToFile("new_config.txt");
-    }   
+    // Criando uma instância de BalloonPlayset
+    BalloonPlayset balloonPlayset;
+
+    // Adicionando balões ao conjunto de obstaculos
+    balloonPlayset.addBalloon(hotAirBalloon);
+    balloonPlayset.addBalloon(fireBalloon);
+    balloonPlayset.addBalloon(waterBalloon);
+
+    // Simulando os obstaculos com os balões
+    balloonPlayset.playWithBalloons();
+
+    // Liberando a memória alocada
+    delete hotAirBalloon;
+    delete fireBalloon;
+    delete waterBalloon;
     
     return 0;
 

@@ -49,4 +49,7 @@
 #include "WaterBalloon.h"
 #include "WaterBalloon.cpp"
 
+#include "BalloonPlayset.h"
+#include "BalloonPlayset.cpp"
+
 #endif // MAIN_INCLUDES_H
