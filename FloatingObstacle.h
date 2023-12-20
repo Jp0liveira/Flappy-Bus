@@ -11,7 +11,7 @@ class FloatingObstacle : public ObstacleCharacter {
         void collide() override;
         void moveDown() override;
 
-        // // // Métodos virtuais puros
+        //  Métodos virtuais puros
         virtual void floatInAir() = 0;   // Método específico para obstáculos flutuantes
         virtual void applyWindForce() = 0;  // Método para aplicar força de vento
 
