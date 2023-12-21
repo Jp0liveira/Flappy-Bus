@@ -1,4 +1,5 @@
 initialPosition = 5
 initialVelocity = 10.5
-name = BusbusFlapy
-gasLevel = 50
+name = AirBalloon
+gasLevel = 70
+isOnFire = 0

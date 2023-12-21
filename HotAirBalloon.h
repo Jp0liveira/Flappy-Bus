@@ -12,7 +12,7 @@ class HotAirBalloon : public FloatingObstacle {
         // Implementações concretas para métodos virtuais herdados
         void floatInAir() override;
         void applyWindForce() override;
-
+        double getGasLevel() const {return gasLevel;};
         void releaseGas();
 
         double setGasLevel(double newGasLevel);

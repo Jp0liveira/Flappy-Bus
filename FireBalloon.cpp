@@ -81,39 +81,7 @@ std::ostream& operator<<(std::ostream& os, const FireBalloon& fireBalloon) {
 
 // Carregamento de arquivos
 bool FireBalloon::loadVariablesFromFile(const std::string& filename) {
-    std::ifstream inputFile(filename);
-    if (!inputFile.is_open()) {
-        std::cerr << "Error opening file: " << filename << '\n';
-        return false;
-    }
-
-    std::map<std::string, double> numericVariables;
-    std::map<std::string, std::string> stringVariables;
-    std::map<std::string, bool> boolVariables;
-
-    std::string line;
-    std::string variableName;
-    char equalsSign;
-    std::string value;
-
-    while (std::getline(inputFile, line)) {
-        std::istringstream iss(line);
-        if (iss >> variableName >> equalsSign >> value && equalsSign == '=') {
-            if (FloatingObstacle::isNumeric(value)) {
-                double numericValue = std::stod(value);
-                numericVariables[variableName] = numericValue;
-            } else if (value == "true" || value == "false") {
-                bool boolValue = (value == "true");
-                boolVariables[variableName] = boolValue;
-            } else {
-                stringVariables[variableName] = value;
-            }
-        } else {
-            std::cerr << "Error parsing line: " << line << '\n';
-        }
-    }
-    inputFile.close();
-    return processVariables(numericVariables, stringVariables, boolVariables);
+    return HotAirBalloon::loadVariablesFromFile(filename);
 }
 
 bool FireBalloon::processVariables(const std::map<std::string, double>& numericVariables, const std::map<std::string, std::string>& stringVariables, const std::map<std::string, bool>&  boolVariables) {
@@ -134,9 +102,11 @@ bool FireBalloon::saveVariablesToFile(const std::string& filename) const {
         std::cerr << "Error opening file for writing: " << filename << '\n';
         return false;
     }
-
-    // Chama o método da classe base (HotAirBalloon)
-    HotAirBalloon::saveVariablesToFile(filename);
+   
+    outputFile << "initialPosition = " << getPosition() << '\n';
+    outputFile << "initialVelocity = " << getVelocity() << '\n';
+    outputFile << "name = " << getPlayerName() << '\n';
+    outputFile << "gasLevel = " << getGasLevel() << '\n';
     outputFile << "isOnFire = " << this->isOnFire << '\n';
 
     outputFile.close();
