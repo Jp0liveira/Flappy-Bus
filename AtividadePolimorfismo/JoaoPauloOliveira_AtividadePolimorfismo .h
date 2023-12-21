@@ -619,7 +619,7 @@ HotAirBalloon::HotAirBalloon() : FloatingObstacle(), gasLevel(maxGasLevel) {}
 
 HotAirBalloon::HotAirBalloon(int initialPosition, double initialVelocity)
     : FloatingObstacle(initialPosition, initialVelocity), gasLevel(maxGasLevel) {}
-    
+
 double HotAirBalloon::setGasLevel(double newGasLevel) {
     // Verifica se o novo nível de gás está dentro dos limites
     if (newGasLevel >= minGasLevel && newGasLevel <= maxGasLevel) {
@@ -682,98 +682,128 @@ const Human &Human::operator=(const Human &other_human) {
     return *this;
 }
 
+// Segui o comando no notion e não ficou bem claro que era para todas as classes
+// por isso só fiz para as classes concretas
      /// Operator=
         /// Hierarquia 1
              //Base
+HotAirBalloon& HotAirBalloon::operator=(const HotAirBalloon& other) {
+    if (this == &other) {
+        return *this;
+    }
 
+    // Chama o operador de atribuição da classe base (FloatingObstacle)
+    FloatingObstacle::operator=(other);
+
+    // Adiciona atributos específicos de HotAirBalloon
+    this->gasLevel = other.gasLevel;
+
+    return *this;
+}
              //Derivadas da Base 1 - mostrar uso static_cast
+FireBalloon& FireBalloon::operator=(const FireBalloon& other) {
+    if (this == &other) {
+        return *this;
+    }
 
-             //Derivadas da Derivada - mostrar uso static_cast
+    // Chama o operador de atribuição da classe base (HotAirBalloon)
+    static_cast<HotAirBalloon&>(*this) = other;
 
-             //e assim por diante
+    // Adiciona atributos específicos de FireBalloon
+    this->isOnFire = other.isOnFire;
 
-        /// Hierarquia 2
-             //Base
+    return *this;
+}
+             //Derivadas da Base 1 - mostrar uso static_cast
+WaterBalloon& WaterBalloon::operator=(const WaterBalloon& other) {
+    if (this == &other) {
+        return *this;
+    }
 
-             //Derivadas da Base 2 - mostrar uso static_cast
+    // Chama o operador de atribuição da classe base (HotAirBalloon)
+    static_cast<HotAirBalloon&>(*this) = other;
 
-             //Derivadas da Derivada - mostrar uso static_cast
-
-             //e assim por diante
-
-
-        /// Hierarquia 3
-             //Base
-
-             //Derivadas da Base 3 - mostrar uso static_cast
-
-             //Derivadas da Derivada - mostrar uso static_cast
-
-             //e assim por diante
-
-
+    return *this;
+}
 
      //// Operators== e !=
          // Hierarquia 1
              //Base
+bool HotAirBalloon::operator==(const HotAirBalloon& other) const {
+    if (this == &other) {
+        return true;
+    }
+
+    // Compara a parte da classe base (FloatingObstacle)
+    if (FloatingObstacle::operator!=(other)) {
+        return false;
+    }
+
+    return this->gasLevel == other.gasLevel;
+}             
+bool HotAirBalloon::operator!=(const HotAirBalloon& other) const {
+    return !(*this == other);
+}
+             //Derivadas da Base 1 - mostrar uso static_cast
+bool FireBalloon::operator==(const FireBalloon& other) const {
+    if (this == &other) {
+        return true;
+    }
+
+    // Compara a parte da classe base (HotAirBalloon)
+    if (static_cast<const HotAirBalloon&>(*this) != static_cast<const HotAirBalloon&>(other)) {
+        return false;
+    }
+
+    return this->isOnFire == other.isOnFire;
+}
+
+bool FireBalloon::operator!=(const FireBalloon& other) const {
+    return !(*this == other);
+}
 
              //Derivadas da Base 1 - mostrar uso static_cast
+bool WaterBalloon::operator==(const WaterBalloon& other) const {
+    if (this == &other) {
+        return true;
+    }
 
-             //Derivadas da Derivada - mostrar uso static_cast
+    // Compara a parte da classe base (HotAirBalloon)
+    return static_cast<const HotAirBalloon&>(*this) == static_cast<const HotAirBalloon&>(other);
+}
 
-             //e assim por diante
-
-
-         //// Hierarquia 2
-             //Base
-
-             //Derivadas da Base 2 - mostrar uso static_cast
-
-             //Derivadas da Derivada - mostrar uso static_cast
-
-             //e assim por diante
-
-
-        //// Hierarquia 3
-             //Base
-
-             //Derivadas da Base 3 - mostrar uso static_cast
-
-             //Derivadas da Derivada - mostrar uso static_cast
-
-             //e assim por diante
-
+bool WaterBalloon::operator!=(const WaterBalloon& other) const {
+    return !(*this == other);
+}
 
      //// Operator<<
         //// Hierarquia 1
              //Base
+std::ostream& operator<<(std::ostream& os, const HotAirBalloon& hotAirBalloon) {
+    // Usa a sobrecarga da classe base (FloatingObstacle)
+    os << static_cast<const FloatingObstacle&>(hotAirBalloon);
+    os << hotAirBalloon.getObstacleTypeName() << "\n";
+    os << "Gas Level: " << hotAirBalloon.gasLevel << "\n";
+
+    return os;
+}
 
              //Derivadas da Base 1 - mostrar uso static_cast
+std::ostream& operator<<(std::ostream& os, const FireBalloon& fireBalloon) {
+    // Usa a sobrecarga da classe base (HotAirBalloon)
+    os << static_cast<const HotAirBalloon&>(fireBalloon);
+    os << (fireBalloon.isOnFire ? "On Fire" : "Not On Fire") << "\n";
 
-              //Derivadas da Derivada - mostrar uso static_cast
+    return os;
+}
+              //Derivadas da Base 1 - mostrar uso static_cast
+std::ostream& operator<<(std::ostream& os, const WaterBalloon& waterBalloon) {
+    // Usa a sobrecarga da classe base (HotAirBalloon)
+    os << static_cast<const HotAirBalloon&>(waterBalloon);
 
-             //e assim por diante
+    return os;
+}
 
-
-        //// Hierarquia 2
-             //Base
-
-             //Derivadas da Base 2 - mostrar uso static_cast
-
-              //Derivadas da Derivada - mostrar uso static_cast
-
-             //e assim por diante
-
-
-       //// Hierarquia 3
-
-             //Base
-
-             //Derivadas da Base 3 - mostrar uso static_cast
-
-              //Derivadas da Derivada - mostrar uso static_cast
-
-             //e assim por diante
 
             
 
@@ -781,10 +811,161 @@ const Human &Human::operator=(const Human &other_human) {
     /*É necessário ter a funcionalidade: 1. 
       leitura de arquivos para configuração das suas classes e variáveis de status, 
       2. processamento das variáveis de status e 
-      3. salvamento dessas variáveis. 
-      
-///Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avaliado.*/
+      3. salvamento dessas variáveis. */
 
-    //Link arquivo de configuração no repositório
+        // Classe HotAirBalloon:
+bool HotAirBalloon::loadVariablesFromFile(const std::string& filename) {
+    std::ifstream inputFile(filename);
+    if (!inputFile.is_open()) {
+        std::cerr << "Error opening file: " << filename << '\n';
+        return false;
+    }
+
+    std::map<std::string, double> numericVariables;
+    std::map<std::string, std::string> stringVariables;
+    std::map<std::string, bool> boolVariables;
+
+    std::string line;
+    std::string variableName;
+    char equalsSign;
+    std::string value;
+
+    while (std::getline(inputFile, line)) {
+        std::istringstream iss(line);
+        if (iss >> variableName >> equalsSign >> value && equalsSign == '=') {
+            if (FloatingObstacle::isNumeric(value)) {
+                double numericValue = std::stod(value);
+                numericVariables[variableName] = numericValue;
+            } else if (value == "true" || value == "false") {
+                bool boolValue = (value == "true");
+                boolVariables[variableName] = boolValue;
+            } else {
+                stringVariables[variableName] = value;
+            }
+        } else {
+            std::cerr << "Error parsing line: " << line << '\n';
+        }
+    }
+    inputFile.close();
+    return processVariables(numericVariables, stringVariables, boolVariables);
+}
+
+bool HotAirBalloon::processVariables(const std::map<std::string, double>& numericVariables, const std::map<std::string, std::string>& stringVariables, const std::map<std::string, bool>& boolVariables) {
+    if (numericVariables.find("initialPosition") != numericVariables.end())
+        setPosition(numericVariables.at("initialPosition"));
+
+    if (numericVariables.find("initialVelocity") != numericVariables.end())
+        setVelocity(numericVariables.at("initialVelocity"));
+
+    if (stringVariables.find("name") != stringVariables.end())
+        setPlayerName(stringVariables.at("name"));
+
+    if (numericVariables.find("gasLevel") != numericVariables.end())
+        this->gasLevel = this->setGasLevel(numericVariables.at("gasLevel"));
+
+    return true;
+}
+
+bool HotAirBalloon::saveVariablesToFile(const std::string& filename) const {
+    std::ofstream outputFile(filename);
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening file for writing: " << filename << '\n';
+        return false;
+    }
+
+    outputFile << "initialPosition = " << getPosition() << '\n';
+    outputFile << "initialVelocity = " << getVelocity() << '\n';
+    outputFile << "name = " << getPlayerName() << '\n';
+    outputFile << "gasLevel = " << this->gasLevel << '\n';
+
+    outputFile.close();
+
+    return true;
+}
+
+      // Classe FireBalloon:
+bool FireBalloon::loadVariablesFromFile(const std::string& filename) {
+    std::ifstream inputFile(filename);
+    if (!inputFile.is_open()) {
+        std::cerr << "Error opening file: " << filename << '\n';
+        return false;
+    }
+
+    std::map<std::string, double> numericVariables;
+    std::map<std::string, std::string> stringVariables;
+    std::map<std::string, bool> boolVariables;
+
+    std::string line;
+    std::string variableName;
+    char equalsSign;
+    std::string value;
+
+    while (std::getline(inputFile, line)) {
+        std::istringstream iss(line);
+        if (iss >> variableName >> equalsSign >> value && equalsSign == '=') {
+            if (FloatingObstacle::isNumeric(value)) {
+                double numericValue = std::stod(value);
+                numericVariables[variableName] = numericValue;
+            } else if (value == "true" || value == "false") {
+                bool boolValue = (value == "true");
+                boolVariables[variableName] = boolValue;
+            } else {
+                stringVariables[variableName] = value;
+            }
+        } else {
+            std::cerr << "Error parsing line: " << line << '\n';
+        }
+    }
+    inputFile.close();
+    return processVariables(numericVariables, stringVariables, boolVariables);
+}
+
+bool FireBalloon::processVariables(const std::map<std::string, double>& numericVariables, const std::map<std::string, std::string>& stringVariables, const std::map<std::string, bool>&  boolVariables) {
+    // Chama o método da classe base (HotAirBalloon)
+    if (!HotAirBalloon::processVariables(numericVariables, stringVariables, boolVariables)) {
+        return false;
+    }
+
+     if (boolVariables.find("isOnFire") != boolVariables.end())
+        this->isOnFire = boolVariables.at("isOnFire");
+
+    return true;
+}
+
+bool FireBalloon::saveVariablesToFile(const std::string& filename) const {
+    std::ofstream outputFile(filename);
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening file for writing: " << filename << '\n';
+        return false;
+    }
+
+    // Chama o método da classe base (HotAirBalloon)
+    HotAirBalloon::saveVariablesToFile(filename);
+    outputFile << "isOnFire = " << this->isOnFire << '\n';
+
+    outputFile.close();
+
+    return true;
+}
+
+     // Classe WaterBalloon:
+bool WaterBalloon::loadVariablesFromFile(const std::string& filename) {
+    return HotAirBalloon::loadVariablesFromFile(filename);
+}
+
+bool WaterBalloon::processVariables(const std::map<std::string, double>& numericVariables,const std::map<std::string, std::string>& stringVariables, const std::map<std::string, bool>& boolVariables) {
+    return HotAirBalloon::processVariables(numericVariables, stringVariables, boolVariables);
+}
+
+bool WaterBalloon::saveVariablesToFile(const std::string& filename) const {
+    return HotAirBalloon::saveVariablesToFile(filename);
+}
+
+///Sem o diagrama UML, a saída do programa e o vídeo, o trabalho não será avaliado.
+    https://excellent-territory-e7f.notion.site/Atividade-Polimorfismo_-Jo-o-Paulo-Oliveira-aabdac6ef5aa4bbdbb020620c1d07376?pvs=4
+
+    //Link arquivo de configuração no repositório:
+    https://github.com/Jp0liveira/Flappy-Bus/blob/desenvolvimento/output/config.txt
 
     //Link vídeo mostrando a execução do código usando o arquivo de configuração
+    
