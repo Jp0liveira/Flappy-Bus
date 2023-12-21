@@ -139,7 +139,7 @@ class HotAirBalloon : public FloatingObstacle {
         // Implementações concretas para métodos virtuais herdados
         void floatInAir() override;
         void applyWindForce() override;
-
+        double getGasLevel() const {return gasLevel;};
         void releaseGas();
 
         double setGasLevel(double newGasLevel);
@@ -932,21 +932,25 @@ bool FireBalloon::processVariables(const std::map<std::string, double>& numericV
     return true;
 }
 
+// aqui deu um bug na hora de salvar, por isso não usei a classe base (HotAirBalloon)
 bool FireBalloon::saveVariablesToFile(const std::string& filename) const {
     std::ofstream outputFile(filename);
     if (!outputFile.is_open()) {
         std::cerr << "Error opening file for writing: " << filename << '\n';
         return false;
     }
-
-    // Chama o método da classe base (HotAirBalloon)
-    HotAirBalloon::saveVariablesToFile(filename);
+   
+    outputFile << "initialPosition = " << getPosition() << '\n';
+    outputFile << "initialVelocity = " << getVelocity() << '\n';
+    outputFile << "name = " << getPlayerName() << '\n';
+    outputFile << "gasLevel = " << getGasLevel() << '\n';
     outputFile << "isOnFire = " << this->isOnFire << '\n';
 
     outputFile.close();
 
     return true;
 }
+
 
      // Classe WaterBalloon:
 bool WaterBalloon::loadVariablesFromFile(const std::string& filename) {
@@ -968,4 +972,4 @@ bool WaterBalloon::saveVariablesToFile(const std::string& filename) const {
     https://github.com/Jp0liveira/Flappy-Bus/blob/desenvolvimento/output/config.txt
 
     //Link vídeo mostrando a execução do código usando o arquivo de configuração
-    
+    https://drive.google.com/file/d/1pdK0SbHABhF3F1A8r9aH0kDlayRjMzQ9/view?usp=sharing
